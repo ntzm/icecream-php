@@ -4,11 +4,10 @@ namespace IceCream;
 
 use ParseError;
 
-function ic() {
+function ic(...$values) {
     $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
     $caller = $backtrace[0];
     $inside = $backtrace[1] ?? null;
-    $values = func_get_args();
     $output = IceCream::getOutputFunction();
 
     if ($values === []) {
