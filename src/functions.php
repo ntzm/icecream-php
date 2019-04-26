@@ -58,6 +58,25 @@ function ic() {
     for ($i = 1; $i < $tokenCount; ++$i) {
         $token = $tokens[$i];
 
+        if (! is_array($token)) {
+            continue;
+        }
+
+        if ($token[2] > $caller['line']) {
+            // We've overshot, let's go backwards now
+            for (; $i >= 1; --$i) {
+                $token = $tokens[$i];
+
+                if (
+                    $token[0] === T_STRING
+                    && strtolower($token[1]) === 'ic'
+                ) {
+                    $functionNameIndex = $i;
+                    break 2;
+                }
+            }
+        }
+
         if (
             $token[0] === T_STRING
             && $token[2] === $caller['line']

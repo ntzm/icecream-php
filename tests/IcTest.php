@@ -67,10 +67,8 @@ final class IcTest extends TestCase
 
     public function testFunctionCallOnDifferentLineToFirstArgument(): void
     {
-        $this->markTestIncomplete();
-
         ic(
-            'foo',
+            'foo'
         );
 
         $this->assertSame("ic| 'foo': foo" . PHP_EOL, ob_get_clean());
