@@ -16,7 +16,7 @@ final class IcTest extends TestCase
         ob_start();
 
         IceCream::enable();
-        IceCream::setOutputFunction(null);
+        IceCream::resetOutputFunction();
         IceCream::setPrefix('ic| ');
     }
 

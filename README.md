@@ -5,8 +5,6 @@ A PHP port of Python's [IceCream](https://github.com/gruns/icecream).
 ## Usage
 
 ```php
-<?php
-
 use function IceCream\ic;
 
 function foo($i) {
@@ -34,6 +32,22 @@ bar();
 ```bash
 $ composer require --dev ntzm/icecream
 ```
+
+## Configuration
+
+If you want to disable the output, you can call `IceCream::disable()`.
+If you want to re-enable the output, you can call `IceCream::enable()`.
+
+If you want to change the prefix of the output, you can call `IceCream::setPrefix('myPrefix: ')` (by default the prefix is `ic| `).
+
+If you want to change how the result is outputted, you can call `IceCream::setOutputFunction()`.
+For example, if you want to log your messages to a file:
+```php
+IceCream::setOutputFunction(function (string $message): void {
+    file_put_contents('log.txt', $message . PHP_EOL, FILE_APPEND);
+});
+```
+You can reset to the default output function by calling `IceCream::resetOutputFunction()`.
 
 ## Caveats
 

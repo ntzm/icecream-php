@@ -23,21 +23,14 @@ final class IceCream
         self::$enabled = true;
     }
 
-    public static function isDisabled(): bool
-    {
-        return ! self::$enabled;
-    }
-
-    public static function setOutputFunction(?callable $function): void
+    public static function setOutputFunction(callable $function): void
     {
         self::$outputFunction = $function;
     }
 
-    public static function getOutputFunction(): callable
+    public static function resetOutputFunction(): void
     {
-        return self::$outputFunction ?? static function (string $output): void {
-            echo self::getPrefix() . $output . PHP_EOL;
-        };
+        self::$outputFunction = null;
     }
 
     public static function setPrefix($prefix): void
@@ -45,6 +38,21 @@ final class IceCream
         self::$prefix = $prefix;
     }
 
+    /** @internal */
+    public static function isDisabled(): bool
+    {
+        return ! self::$enabled;
+    }
+
+    /** @internal */
+    public static function getOutputFunction(): callable
+    {
+        return self::$outputFunction ?? static function (string $output): void {
+            echo self::getPrefix() . $output . PHP_EOL;
+        };
+    }
+
+    /** @internal */
     public static function getPrefix(): string
     {
         return is_callable(self::$prefix) ? (self::$prefix)() : self::$prefix;
