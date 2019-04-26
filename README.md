@@ -37,16 +37,20 @@ $ composer require --dev ntzm/icecream
 
 ## Caveats
 
-- You should only have one call to `ic` on one line, otherwise you will get malformed output
-- All the arguments of `ic` should be on one line, e.g.
+- You should not call `ic` more than once per line, otherwise you will get incorrect output
 ```php
-// GOOD
-ic('foo', 'bar', 'baz');
-// BAD
-ic(
-    'foo',
-    'bar',
-    'baz'
-);
+// Don't do this
+ic('foo'); ic('bar');
 ```
 - You should not alias the `ic` function
+```php
+// Don't do this
+use function IceCream\ic as debug;
+debug();
+```
+- You should not use the `ic` function dynamically
+```php
+// Don't do this
+$fn = 'IceCream\ic';
+$fn();
+```
