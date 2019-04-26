@@ -50,6 +50,7 @@ function ic() {
 
     $tokenCount = count($tokens);
     $functionNameIndex = null;
+    $functionUsageIndexes = [];
 
     // STEP 1: Find the function name
     // e.g. ic('foo')
@@ -63,27 +64,12 @@ function ic() {
         }
 
         if ($token[2] > $caller['line']) {
-            // We've overshot, let's go backwards now
-            for (; $i >= 1; --$i) {
-                $token = $tokens[$i];
-
-                if (
-                    $token[0] === T_STRING
-                    && strtolower($token[1]) === 'ic'
-                ) {
-                    $functionNameIndex = $i;
-                    break 2;
-                }
-            }
+            $functionNameIndex = end($functionUsageIndexes);
+            break;
         }
 
-        if (
-            $token[0] === T_STRING
-            && $token[2] === $caller['line']
-            && strtolower($token[1]) === 'ic'
-        ) {
-            $functionNameIndex = $i;
-            break;
+        if ($token[0] === T_STRING && strtolower($token[1]) === 'ic') {
+            $functionUsageIndexes[] = $i;
         }
     }
 
