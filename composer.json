@@ -1,0 +1,15 @@
+{
+    "name": "ntzm/icecream",
+    "type": "library",
+    "license": "MIT",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "IceCream\\": "src/"
+        },
+        "files": ["src/functions.php"]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.1"
+    }
+}
