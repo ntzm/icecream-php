@@ -1,8 +1,11 @@
 {
     "name": "ntzm/icecream",
+    "description": "Sweet and creamy print debugging",
     "type": "library",
     "license": "MIT",
-    "require": {},
+    "require": {
+        "php": "^7.2"
+    },
     "autoload": {
         "psr-4": {
             "IceCream\\": "src/"
