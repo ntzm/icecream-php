@@ -76,8 +76,6 @@ final class IcTest extends TestCase
 
     public function testMultipleOnDifferentLines(): void
     {
-        $this->markTestIncomplete();
-
         ic(
             'foo',
             'bar',

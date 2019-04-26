@@ -128,7 +128,15 @@ function ic() {
             --$braceDepth;
         }
 
-        $contents[] = is_array($token) ? $token[1] : $token;
+        if (is_array($token)) {
+            if ($token[0] === T_WHITESPACE) {
+                $contents[] = ' ';
+            } else {
+                $contents[] = $token[1];
+            }
+        } else {
+            $contents[] = $token;
+        }
     }
 
     if ($contents === []) {
