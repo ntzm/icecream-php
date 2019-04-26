@@ -79,7 +79,7 @@ function ic() {
 
     $openBraceIndex = null;
 
-    // STEP 2: Find the function call opening brace
+    // STEP 3: Find the function call opening brace
     // e.g. ic('foo')
     //        ^
     for ($i = $functionNameIndex + 1; $i < $tokenCount; ++$i) {
