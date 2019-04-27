@@ -18,7 +18,7 @@ function ic(...$values) {
         $string = basename($caller['file']) . ":{$caller['line']}";
 
         if (isset($inside['class'])) {
-            $class = strpos($inside['class'], 'class@anonymous') === 0 ? 'class@anonymous' : $inside['class'];
+            $class = strpos($inside['class'], 'class@') === 0 ? 'class@anonymous' : $inside['class'];
             $string .= " in {$class}{$inside['type']}{$inside['function']}()";
         } elseif (isset($inside['function'])) {
             $string .= " in {$inside['function']}()";
