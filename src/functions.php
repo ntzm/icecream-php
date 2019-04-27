@@ -128,13 +128,14 @@ function ic(...$values) {
         throw UntraceableCall::couldNotReadContentsOfCall($caller['file'], $caller['line']);
     }
 
-    $string = trim($contents) . ': ';
-
-    $string .= implode(', ', array_map(static function ($value): string {
-        return trim(print_r($value, true));
-    }, $values));
-
-    $output($string);
+    $output(
+        trim($contents) . ': ' . implode(
+            ', ',
+            array_map(static function ($value): string {
+                return trim(print_r($value, true));
+            }, $values)
+        )
+    );
 
     return $return;
 }
