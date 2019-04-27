@@ -130,9 +130,9 @@ function ic(...$values) {
 
     $string = trim($contents) . ': ';
 
-    foreach ($values as $value) {
-        $string .= trim(print_r($value, true));
-    }
+    $string .= implode(', ', array_map(static function ($value): string {
+        return trim(print_r($value, true));
+    }, $values));
 
     $output($string);
 

@@ -33,7 +33,7 @@ final class IcTest extends TestCase
         $output = ic('foo', 'bar');
 
         $this->assertSame(['foo', 'bar'], $output);
-        $this->assertSame("ic| 'foo', 'bar': foobar" . PHP_EOL, ob_get_clean());
+        $this->assertSame("ic| 'foo', 'bar': foo, bar" . PHP_EOL, ob_get_clean());
     }
 
     public function testNotUse(): void
@@ -82,7 +82,7 @@ final class IcTest extends TestCase
             'baz'
         );
 
-        $this->assertSame("ic| 'foo', 'bar', 'baz': foobarbaz" . PHP_EOL, ob_get_clean());
+        $this->assertSame("ic| 'foo', 'bar', 'baz': foo, bar, baz" . PHP_EOL, ob_get_clean());
     }
 
     public function testCommentInBetweenFunctionNameAndOpeningBrace(): void
