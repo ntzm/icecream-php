@@ -93,7 +93,7 @@ function ic(...$values) {
     }
 
     $braceDepth = 0;
-    $contents = [];
+    $contents = '';
 
     // STEP 2: Find all the tokens between the opening brace and the closing brace
     // e.g. ic('foo')
@@ -115,20 +115,20 @@ function ic(...$values) {
 
         if (is_array($token)) {
             if ($token[0] === T_WHITESPACE) {
-                $contents[] = ' ';
+                $contents .= ' ';
             } else {
-                $contents[] = $token[1];
+                $contents .= $token[1];
             }
         } else {
-            $contents[] = $token;
+            $contents .= $token;
         }
     }
 
-    if ($contents === []) {
+    if ($contents === '') {
         throw UntraceableCall::couldNotReadContentsOfCall($caller['file'], $caller['line']);
     }
 
-    $string = trim(implode('', $contents)) . ': ';
+    $string = trim($contents) . ': ';
 
     foreach ($values as $value) {
         $string .= trim(print_r($value, true));
