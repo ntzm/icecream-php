@@ -44,7 +44,7 @@ function ic(...$values) {
     try {
         $tokens = token_get_all($fileContent, TOKEN_PARSE);
     } catch (ParseError $e) {
-        throw UntraceableCall::couldNotOpen($caller['file']);
+        throw UntraceableCall::couldNotParse($caller['file']);
     }
 
     $tokenCount = count($tokens);
