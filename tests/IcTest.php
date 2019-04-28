@@ -92,17 +92,6 @@ final class IcTest extends TestCase
         $this->assertSame("ic| 'foo': foo" . PHP_EOL, ob_get_clean());
     }
 
-    public function testUsedIndirectly(): void
-    {
-        $this->markTestIncomplete();
-
-        $function = 'IceCream\\ic';
-
-        $function('foo');
-
-        $this->assertSame("ic| 'foo': foo" . PHP_EOL, ob_get_clean());
-    }
-
     public function testNestedBraces(): void
     {
         ic(strtolower(strtolower(strtolower('a'))));
