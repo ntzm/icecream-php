@@ -232,4 +232,17 @@ final class IcTest extends TestCase
 
         $this->assertSame("foo'foo': foo" . PHP_EOL, ob_get_clean());
     }
+
+    public function testWithCommentsInsideCall(): void
+    {
+        ic(
+            // foo
+            # bar
+            'baz'
+            /* qux */
+            /** wow */
+        );
+
+        $this->assertSame("ic| 'baz': baz" . PHP_EOL, ob_get_clean());
+    }
 }

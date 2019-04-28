@@ -113,15 +113,23 @@ function ic(...$values) {
             --$braceDepth;
         }
 
-        if (is_array($token)) {
-            if ($token[0] === T_WHITESPACE) {
-                $contents .= ' ';
-            } else {
-                $contents .= $token[1];
-            }
-        } else {
+        if (! is_array($token)) {
             $contents .= $token;
+            continue;
         }
+
+        $type = $token[0];
+
+        if ($type === T_COMMENT || $type === T_DOC_COMMENT) {
+            continue;
+        }
+
+        if ($type === T_WHITESPACE) {
+            $contents .= ' ';
+            continue;
+        }
+
+        $contents .= $token[1];
     }
 
     if ($contents === '') {
