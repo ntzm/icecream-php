@@ -185,6 +185,13 @@ final class IcTest extends TestCase
         $this->assertSame('ic| in-function.php:6 in foo()' . PHP_EOL, ob_get_clean());
     }
 
+    public function testWithoutArgumentsInAnonymousFunction(): void
+    {
+        system('php ' . __DIR__ . '/in-anonymous-function.php');
+
+        $this->assertSame('ic| in-anonymous-function.php:6 in {closure}()' . PHP_EOL, ob_get_clean());
+    }
+
     public function testDifferentCase(): void
     {
         iC('foo');
