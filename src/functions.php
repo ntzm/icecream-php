@@ -5,16 +5,20 @@ namespace IceCream;
 use ParseError;
 
 function ic(...$values) {
+    if (IceCream::isDisabled()) {
+        if ($values === []) {
+            return null;
+        }
+
+        return count($values) === 1 ? $values[0] : $values;
+    }
+
     $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
     $caller = $backtrace[0];
     $inside = $backtrace[1] ?? null;
     $output = IceCream::getOutputFunction();
 
     if ($values === []) {
-        if (IceCream::isDisabled()) {
-            return null;
-        }
-
         $string = basename($caller['file']) . ":{$caller['line']}";
 
         if (isset($inside['class'])) {
@@ -27,12 +31,6 @@ function ic(...$values) {
         $output($string);
 
         return null;
-    }
-
-    $return = count($values) === 1 ? $values[0] : $values;
-
-    if (IceCream::isDisabled()) {
-        return $return;
     }
 
     $fileContent = file_get_contents($caller['file']);
@@ -145,5 +143,5 @@ function ic(...$values) {
         )
     );
 
-    return $return;
+    return count($values) === 1 ? $values[0] : $values;
 }
