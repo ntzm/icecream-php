@@ -3,6 +3,25 @@
 namespace IceCream;
 
 use ParseError;
+use const DEBUG_BACKTRACE_IGNORE_ARGS;
+use const T_COMMENT;
+use const T_DOC_COMMENT;
+use const T_STRING;
+use const T_WHITESPACE;
+use const TOKEN_PARSE;
+use function array_map;
+use function basename;
+use function count;
+use function debug_backtrace;
+use function end;
+use function file_get_contents;
+use function implode;
+use function is_array;
+use function print_r;
+use function strpos;
+use function strtolower;
+use function token_get_all;
+use function trim;
 
 function ic(...$values) {
     if (IceCream::isDisabled()) {

@@ -2,6 +2,9 @@
 
 namespace IceCream;
 
+use const PHP_EOL;
+use function is_callable;
+
 final class IceCream
 {
     /** @var bool */
