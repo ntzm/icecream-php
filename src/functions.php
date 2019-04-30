@@ -2,14 +2,12 @@
 
 namespace IceCream;
 
-use ParseError;
 use const DEBUG_BACKTRACE_IGNORE_ARGS;
 use const T_COMMENT;
 use const T_DOC_COMMENT;
 use const T_STRING;
 use const T_WHITESPACE;
 use const TOKEN_PARSE;
-use function array_map;
 use function basename;
 use function count;
 use function debug_backtrace;
@@ -53,16 +51,7 @@ function ic(...$values) {
     }
 
     $fileContent = file_get_contents($caller['file']);
-
-    if ($fileContent === false) {
-        throw UntraceableCall::couldNotOpen($caller['file']);
-    }
-
-    try {
-        $tokens = token_get_all($fileContent, TOKEN_PARSE);
-    } catch (ParseError $e) {
-        throw UntraceableCall::couldNotParse($caller['file']);
-    }
+    $tokens = token_get_all($fileContent, TOKEN_PARSE);
 
     $tokenCount = count($tokens);
     $functionNameIndex = null;
@@ -89,10 +78,6 @@ function ic(...$values) {
         }
     }
 
-    if ($functionNameIndex === null) {
-        throw UntraceableCall::couldNotReadContentsOfCall($caller['file'], $caller['line']);
-    }
-
     $openBraceIndex = null;
 
     // STEP 3: Find the function call opening brace
@@ -103,10 +88,6 @@ function ic(...$values) {
             $openBraceIndex = $i;
             break;
         }
-    }
-
-    if ($openBraceIndex === null) {
-        throw UntraceableCall::couldNotReadContentsOfCall($caller['file'], $caller['line']);
     }
 
     $braceDepth = 0;
@@ -163,10 +144,6 @@ function ic(...$values) {
         }
 
         $contents[$current] .= $token[1];
-    }
-
-    if ($contents === '') {
-        throw UntraceableCall::couldNotReadContentsOfCall($caller['file'], $caller['line']);
     }
 
     $strings = [];
