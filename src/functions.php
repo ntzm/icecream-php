@@ -90,9 +90,7 @@ function ic(...$values) {
         }
     }
 
-    $braceDepth = 0;
-    $bracketDepth = 0;
-    $curlyDepth = 0;
+    $depth = 0;
     $contents = [''];
     $current = 0;
 
@@ -102,35 +100,23 @@ function ic(...$values) {
     for ($i = $openBraceIndex + 1; $i < $tokenCount; ++$i) {
         $token = $tokens[$i];
 
-        if ($token === '[') {
-            ++$bracketDepth;
+        if ($token === '[' || $token === '{' || $token === '(') {
+            ++$depth;
         }
 
-        if ($token === ']') {
-            ++$bracketDepth;
-        }
-
-        if ($token === '{') {
-            ++$curlyDepth;
-        }
-
-        if ($token === '}') {
-            ++$curlyDepth;
-        }
-
-        if ($token === '(') {
-            ++$braceDepth;
+        if ($token === ']' || $token === '}') {
+            --$depth;
         }
 
         if ($token === ')') {
-            if ($braceDepth === 0) {
+            if ($depth === 0) {
                 break;
             }
 
-            --$braceDepth;
+            --$depth;
         }
 
-        if ($braceDepth === 0 && $bracketDepth === 0 && $curlyDepth === 0 && $token === ',') {
+        if ($depth === 0 && $token === ',') {
             ++$current;
             $contents[$current] = '';
             continue;

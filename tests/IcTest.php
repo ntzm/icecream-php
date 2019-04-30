@@ -248,4 +248,20 @@ final class IcTest extends TestCase
 
         $this->assertTrue(strpos(ob_get_clean(), 'ic| function () { echo 1, 2; }:') === 0);
     }
+
+    public function testWithMixed(): void
+    {
+        ic([1, [2, 3]] + [5], (function () { return 5; })());
+
+        $this->assertSame('ic| [1, [2, 3]] + [5]: Array
+(
+    [0] => 1
+    [1] => Array
+        (
+            [0] => 2
+            [1] => 3
+        )
+
+), (function () { return 5; })(): 5' . PHP_EOL, ob_get_clean());
+    }
 }
