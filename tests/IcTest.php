@@ -241,4 +241,11 @@ final class IcTest extends TestCase
 
         $this->assertSame("ic| 'baz': baz" . PHP_EOL, ob_get_clean());
     }
+
+    public function testWithCommasInsideCall(): void
+    {
+        ic(function () { echo 1, 2; });
+
+        $this->assertTrue(strpos(ob_get_clean(), 'ic| function () { echo 1, 2; }:') === 0);
+    }
 }

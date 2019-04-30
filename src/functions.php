@@ -92,6 +92,7 @@ function ic(...$values) {
 
     $braceDepth = 0;
     $bracketDepth = 0;
+    $curlyDepth = 0;
     $contents = [''];
     $current = 0;
 
@@ -109,6 +110,14 @@ function ic(...$values) {
             ++$bracketDepth;
         }
 
+        if ($token === '{') {
+            ++$curlyDepth;
+        }
+
+        if ($token === '}') {
+            ++$curlyDepth;
+        }
+
         if ($token === '(') {
             ++$braceDepth;
         }
@@ -121,7 +130,7 @@ function ic(...$values) {
             --$braceDepth;
         }
 
-        if ($braceDepth === 0 && $bracketDepth === 0 && $token === ',') {
+        if ($braceDepth === 0 && $bracketDepth === 0 && $curlyDepth === 0 && $token === ',') {
             ++$current;
             $contents[$current] = '';
             continue;
