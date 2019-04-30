@@ -110,13 +110,23 @@ function ic(...$values) {
     }
 
     $braceDepth = 0;
-    $contents = '';
+    $bracketDepth = 0;
+    $contents = [''];
+    $current = 0;
 
     // STEP 2: Find all the tokens between the opening brace and the closing brace
     // e.g. ic('foo')
     //         ^^^^^
     for ($i = $openBraceIndex + 1; $i < $tokenCount; ++$i) {
         $token = $tokens[$i];
+
+        if ($token === '[') {
+            ++$bracketDepth;
+        }
+
+        if ($token === ']') {
+            ++$bracketDepth;
+        }
 
         if ($token === '(') {
             ++$braceDepth;
@@ -130,8 +140,14 @@ function ic(...$values) {
             --$braceDepth;
         }
 
+        if ($braceDepth === 0 && $bracketDepth === 0 && $token === ',') {
+            ++$current;
+            $contents[$current] = '';
+            continue;
+        }
+
         if (! is_array($token)) {
-            $contents .= $token;
+            $contents[$current] .= $token;
             continue;
         }
 
@@ -142,25 +158,24 @@ function ic(...$values) {
         }
 
         if ($type === T_WHITESPACE) {
-            $contents .= ' ';
+            $contents[$current] .= ' ';
             continue;
         }
 
-        $contents .= $token[1];
+        $contents[$current] .= $token[1];
     }
 
     if ($contents === '') {
         throw UntraceableCall::couldNotReadContentsOfCall($caller['file'], $caller['line']);
     }
 
-    $output(
-        trim($contents) . ': ' . implode(
-            ', ',
-            array_map(static function ($value): string {
-                return trim(print_r($value, true));
-            }, $values)
-        )
-    );
+    $strings = [];
+
+    foreach ($contents as $i => $content) {
+        $strings[] = trim($content) . ': ' . trim(print_r($values[$i], true));
+    }
+
+    $output(implode(', ', $strings));
 
     return count($values) === 1 ? $values[0] : $values;
 }
