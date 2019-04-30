@@ -19,6 +19,10 @@ ic(1 + 5);
 // Outputs:
 // ic| 1 + 5: 6
 
+ic(foo(123), 1 + 5);
+// Outputs:
+// ic| foo(123): 456, 1 + 5: 6
+
 function bar() {
     ic();
 }
