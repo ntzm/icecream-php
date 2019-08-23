@@ -69,7 +69,6 @@ function ic(...$values) {
         }
 
         if ($token[2] > $caller['line']) {
-            $functionNameIndex = end($functionUsageIndexes);
             break;
         }
 
@@ -78,9 +77,10 @@ function ic(...$values) {
         }
     }
 
+    $functionNameIndex = end($functionUsageIndexes);
     $openBraceIndex = null;
 
-    // STEP 3: Find the function call opening brace
+    // STEP 2: Find the function call opening brace
     // e.g. ic('foo')
     //        ^
     for ($i = $functionNameIndex + 1; $i < $tokenCount; ++$i) {
@@ -94,7 +94,7 @@ function ic(...$values) {
     $contents = [''];
     $current = 0;
 
-    // STEP 2: Find all the tokens between the opening brace and the closing brace
+    // STEP 3: Find all the tokens between the opening brace and the closing brace
     // e.g. ic('foo')
     //         ^^^^^
     for ($i = $openBraceIndex + 1; $i < $tokenCount; ++$i) {

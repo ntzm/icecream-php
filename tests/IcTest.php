@@ -181,6 +181,17 @@ final class IcTest extends TestCase
         $this->assertSame('ic| in-anonymous-function.php:6 in {closure}()' . PHP_EOL, ob_get_clean());
     }
 
+    public function testAtEndOfFile(): void
+    {
+        system('php ' . __DIR__ . '/end-of-file.php');
+
+        $this->assertSame(
+            'ic| $x: 42' . PHP_EOL .
+            'ic| $foo: foo' . PHP_EOL,
+            ob_get_clean()
+        );
+    }
+
     public function testDifferentCase(): void
     {
         iC('foo');
