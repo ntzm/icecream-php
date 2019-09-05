@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.1] - 2019-09-05
+
+### Fixed
+
+- Fixed wrong value being printed if `ic` call was the last thing in the file
+
 ## [1.1.0] - 2019-05-06
 
 ### Added
@@ -20,3 +26,4 @@
 - Initial release
 
 [1.1.0]: https://github.com/ntzm/icecream-php/compare/1.0.0..1.1.0
+[1.1.1]: https://github.com/ntzm/icecream-php/compare/1.1.0..1.1.1
